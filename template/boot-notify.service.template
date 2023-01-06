@@ -1,0 +1,11 @@
+[Unit]
+Description=Script to notify user that the RPi has booted
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 <notify>
+
+[Install]
+WantedBy=multi-user.target

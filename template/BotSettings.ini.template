@@ -1,0 +1,27 @@
+; Generated: 01/06/2023 (dlk)
+; Modified:  01/06/2023 (dlk)
+;
+; Default INI file for the Boot Notification script.
+
+; Device type and name.
+[bot_settings.info]
+device = RPi Zero
+name = Node 1
+
+; Logging settings.
+; MUST use absolute path for the logs
+; folder path.
+[bot_settings.logging]
+log_to_console = 1
+log_to_file = 1
+log_max_len = 80
+log_file_name = run.log
+log_folder_path = <path>
+
+; Bot email settings.
+; Requires Gmail that allows third-party
+; application access to send emails.
+[bot_settings.email]
+;bot_email_login = <Bot Email Here>
+;bot_email_paswd = <Bot Password Here>
+;recipient_email = <Recipient Email Here> 
