@@ -57,9 +57,9 @@ Some lines are commented out. You can uncomment them by removing the semicolon a
 Can be edited to something like this:
 ```
 [bot_settings.email]
-;bot_email_login = some.email@gmail.com
-;bot_email_paswd = 136465465165
-;recipient_email = janedoe@example.com
+bot_email_login = some.email@gmail.com
+bot_email_paswd = 136465465165
+recipient_email = janedoe@example.com
 ```
 
 ### Email Configuration
