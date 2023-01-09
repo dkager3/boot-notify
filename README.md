@@ -27,6 +27,16 @@ To remove the boot-notify service, simply run the remove.sh script.
 sudo ./remove.sh
 ```
 
+## Start/Stop
+The boot-notify service can be disabled without uninstalling it. To temporarily stop the service from emailing when the board boots up, run:
+```
+sudo systemctl disable boot-notify
+```
+To re-enable the service again, simply run:
+```
+sudo systemctl enable boot-notify
+```
+
 ## INI
 ### INI Fields
 | Field              | Default Value          | Description                                                                                    |
