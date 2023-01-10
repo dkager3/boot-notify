@@ -1,5 +1,5 @@
 # boot-notify
-A systemd service for Raspberry Pi boards that provides an email notification once the board has booted. This is particularly useful is the board is headless.
+A systemd service geared toward Raspberry Pi boards that provides an email notification once the board has booted. This is primarily used to verify that a headless board has booted.
 
 ## Features
 * Easy to install/remove
