@@ -37,10 +37,18 @@ echo Generating INI ...
 # Generate INI from template with correct logs path
 if sed "s|<path>|$DEFLT_LOGS_PATH|g" $INITEMP > $NOTIFY_INI;  then
   echo Created $NOTIFY_INI 
-  echo
 else
   echo Failed to create $NOTIFY_INI 
   exit
+fi
+
+# Update permissions on the INI
+if chmod 0666 $NOTIFY_INI; then
+  echo Updated permissions for $NOTIFY_INI
+  echo
+else
+  echo Failed to update permissions for $NOTIFY_INI. Please execute \'chmod 0666 $NOTIFY_INI\'.
+  echo
 fi
 
 echo Installing service ...
@@ -55,9 +63,9 @@ fi
 
 # Update permissions on the service
 if chmod 0644 $SERVICE; then
-  echo Update permissions for $SERVICE
+  echo Updated permissions for $SERVICE
 else
-  echo Failed to update permissions for $SERVICE
+  echo Failed to update permissions for $SERVICE. Please execute \'chmod 0644 $SERVICE\'.
 fi
 
 # Enable the service

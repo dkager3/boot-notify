@@ -7,9 +7,9 @@
 from BootNotifyModules import BotEmail as bt
 from BootNotifyModules import logger as lg
 from BootNotifyModules import config
+from datetime import datetime, timezone
 import getopt
 import sys
-import time
 
 # Globals
 # Default INI location
@@ -95,6 +95,7 @@ if __name__ == '__main__':
     recipient   = config.email['recipient_email']
   except:
     logger.log("Email details missing from the INI.", event_type=lg.ERROR)
+    logger.log('[END OF SCRIPT]')
     sys.exit(2);
 
   # Get device details
@@ -106,14 +107,14 @@ if __name__ == '__main__':
     device = 'RPi'
     name = 'Node 1'
 
-  # Get time booted, ET
-  boot_et_time = str(time.ctime(time.time()))
-  logger.log('Booted at {} ET.'.format(boot_et_time))
+  # Get date/time booted, UTC
+  boot_utc_time = datetime.now(timezone.utc).strftime("%d %b, %Y %H:%M:%S UTC")
+  logger.log('Booted at {}.'.format(boot_utc_time))
 
   # Setup email
   email = bt.BotEmail(email_login, email_paswd)
   subject = device + ' ' + name + ' Booted'
-  body = device + ' ' + name + ' booted at ' + boot_et_time + ' ET.'
+  body = device + ' ' + name + ' booted at ' + boot_utc_time + '.'
 
   # Send email
   if email.send(subject, body, recipient):

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
+from datetime import datetime, timezone
 import os
-import time
 from pathlib import Path
 
 # Logging codes
@@ -146,6 +146,7 @@ class Logger:
     self.logs_folder = Path(folder_path).absolute().resolve()
     if not os.path.exists(self.logs_folder):
       os.mkdir(self.logs_folder)
+      os.chmod(self.logs_folder, 0o755)
     self.log_file = self.logs_folder / file_name
     
   def removeLogs(self):
@@ -181,8 +182,8 @@ class Logger:
     -------
       None
     """
-    
-    event_time = time.ctime(time.time())
+
+    event_time_utc = datetime.now(timezone.utc).strftime("%d %b, %Y %H:%M:%S UTC") 
     contentList = []
     
     # If verbose message and verbose setting is "off"
@@ -201,7 +202,7 @@ class Logger:
     else:
       contentList.append("[INFO]")
         
-    contentList.append("{} ET".format(str(event_time)))
+    contentList.append(event_time_utc)
     contentList.append(logmsg)
     
     content = "{: <9} {: <25} {: <50}".format(*contentList)
@@ -217,5 +218,6 @@ class Logger:
           with open(self.log_file, "a") as run_log:
             run_log.write(content)
             run_log.write("\n")
+            os.chmod(self.log_file, 0o666)
         except:
           print("Error writing to {}".format(self.log_file))
