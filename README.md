@@ -36,9 +36,28 @@ To re-enable the service again, simply run:
 ```
 sudo systemctl enable boot-notify
 ```
+## Architecture
+The boot-notify service contains serveral pieces:
+1. Template files
+2. Python scripts
+3. INI Configuration File
 
-## INI
-### INI Fields
+### Template Files
+In **boot-notify/template/**, there are two template files:
+1. BotSettings.ini.template, and 
+2. boot-notify.service.template
+
+These files are ultimately used by the install.sh script to generate **boot-notify/src/BotSettings.ini** and **/etc/systemd/system/boot-notify.service**. The reason for having these template files is that both rely on paths that may be specific to each system.
+
+Example: boot-notify.service needs to know the absolute path to the notify.py script. This path is entirely dependent on where the user clones this repo. The install.sh script gets this information and "fills in the blanks" within the template files.
+
+### Python Scripts
+The brains behind this service resides within **boot-notify/src/boot-notify.py**. This python script is what actually sends the email when run. The email, logging, and config facilities within **boot-notify/src/BootNotifyModules** are all referenced by boot-notify.py.
+
+When boot-notify.service is invoked by systemd, it calls boot-notify.py, but only after a network connection has been established.
+
+### INI
+#### INI Fields
 | Field              | Default Value          | Description                                                                                    |
 |--------------------|------------------------|------------------------------------------------------------------------------------------------|
 | device             | RPi Zero               | Type of device, used in the email                                                              |
@@ -54,7 +73,7 @@ sudo systemctl enable boot-notify
 
 By default, the INI has the device listed as "RPi Zero" and "Node 1". Feel free to change these to represent what device/name you'd like to use in your notifications.
 
-### Modifying the INI
+#### Modifying the INI
 After installation, you can modify the INI by editing **boot-notify/src/BotSettings.ini**. Simply update any of the values you'd like, but be careful! The Python script (boot-notify.py) expects certain data types/format from the INI and could misbehave if you enter something that doesn't make sense. Don't fret, you can always change the INI back to its original state by uninstalling and reinstalling the service.
 
 Some lines are commented out. You can uncomment them by removing the semicolon at the front of the line, then edit the placeholder value stuck there. For instance:
@@ -72,7 +91,9 @@ bot_email_paswd = 136465465165
 recipient_email = janedoe@example.com
 ```
 
-### Email Configuration
+**Note:** By default, BotSettings.ini will always be assigned **boot-notify/logs** as the default directory for logging. After the install script has run, feel free to change this path to whatever you like, just as long as it's an absolute path.
+
+#### Email Configuration
 In order for the boot-notify service to work, the INI needs to be configured with an email login, password, and email address of the recipient. A separate Gmail account is required. Once you make an account, you need to get an [app password](https://support.google.com/accounts/answer/185833) to use to login with the service.
 
 Modify the **[bot_settings.email]** section of the INI to give the required details (bot_email_login, bot_email_paswd, and recipient_email).
