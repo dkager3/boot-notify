@@ -18,7 +18,7 @@ git clone https://github.com/dkager3/boot-notify.git
 cd boot-notify
 sudo ./install.sh
 ```
-3. Update the BotSettings.ini file in **boot-notify/src/** to set the bot email login/password as well as the recipient's email address. See the INI section for more details on the INI file.
+3. Update the BotSettings.ini file in **boot-notify/src/** to set the bot email login/password as well as the recipient's email address. See the [INI section](https://github.com/dkager3/boot-notify#ini) for more details on the INI file (how to modify and configure email).
 4. Next the device is booted, an email will be sent to the one listed in BotSettings.ini.
 
 ## Removal
