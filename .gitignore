@@ -1,2 +1,3 @@
 logs/
 src/BotSettings.ini
+src/BootNotifyModules/__pycache__/
